@@ -10,18 +10,14 @@ def process_file(file_path):
     try:
         with open(file_path, 'r') as file:
             content = file.read()
-            numbers = re.findall(r'-?\d+', content) # Ищем все целые числа (включая отрицательные)
-            filtered_numbers = [] # Фильтруем числа (нечетные и более 3 цифр)
-            for num_str in numbers:
-                num = int(num_str)
-                if num % 2 != 0 and len(num_str.replace('-', '')) > 3:
-                    filtered_numbers.append(num)
+            nums = re.findall(r'-?\d{3,}[13579]', content) # Ищем все целые числа (нечетные и более 3 цифр, возможно отрицательные)
+            numbers = [int(num) for num in nums]
 
-            print(f"Найденные числа: {filtered_numbers}")
-            print(f"Количество чисел: {len(filtered_numbers)}")
-            if filtered_numbers:
-                print(f"Максимальное число: {max(filtered_numbers)}")
-                print(f"Прописью: {number_to_words(max(filtered_numbers))}")
+            print(f"Найденные числа: {numbers}")
+            print(f"Количество чисел: {len(numbers)}")
+            if numbers:
+                print(f"Максимальное число: {max(numbers)}")
+                print(f"Прописью: {number_to_words(max(numbers))}")
             else:
                 print("\nНе найдено подходящих чисел.")
     except FileNotFoundError:
